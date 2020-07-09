@@ -65,7 +65,7 @@ int main(){
      word = strtok(NULL, " ");
       i = i + 1;
     }
-   argsarray[i] = (char*)0;
+   argsarray[i] = NULL;
     i+=1;
    if(strcmp(argsarray[0],"exit\n") == 0){
             
@@ -130,7 +130,7 @@ int main(){
         }
 
     else{
-           
+         printf("IN CHILD pid: %d getpid(): %d\n",pid,getpid()); 
          execv(argsarray[0], argsarray);
 	 exit(0);
      }
@@ -139,7 +139,8 @@ int main(){
         
         int status;
         waitpid(pid,&status,0);
-        printf("pid: %d status: %d\n",pid,WEXITSTATUS(status));
+
+        printf("IN PARENT pid: %d getpid() %d status: %d\n",pid,getpid(),WEXITSTATUS(status));
 
    
     }
