@@ -22,10 +22,10 @@ void handle2(){
 
 int main(){
 
-    signal(SIGINT,handle1);
-    signal(SIGTSTP,handle2);
+  // signal(SIGINT,handle1);
+  // signal(SIGTSTP,handle2);
   while(1){
-  char line[20];
+  char line[100];
   char* argsarray[20];
    int pipefds[2];
 
@@ -45,7 +45,7 @@ int main(){
      argsarray[i] =  malloc(100 * sizeof(char));
 
   }
-  printf("me is %d ",getpid());
+  //printf("me is %d ",getpid());
   //print prompt
   printf("CS361 > ");
 //read line from terminal
@@ -65,15 +65,15 @@ int main(){
      word = strtok(NULL, " ");
       i = i + 1;
     }
-    argsarray[i] = NULL;
+   argsarray[i] = (char*)0;
     i+=1;
-
-    if(strcmp(argsarray[0],"exit") == 0){
+   if(strcmp(argsarray[0],"exit\n") == 0){
             
             exit(0);
     }
 
     bool special= false;
+    if(i>5){
     for(int j =0; j< i;j++){
         if(strcmp(argsarray[2], ";") == 0 || strcmp(argsarray[2], "|")== 0   ){
 
@@ -81,6 +81,7 @@ int main(){
 
         }
 
+    }
     }
 
     int pid = fork();
@@ -129,18 +130,19 @@ int main(){
         }
 
     else{
-       
+           
          execv(argsarray[0], argsarray);
+	 exit(0);
      }
     }
      else{
         
         int status;
-    waitpid(pid,&status,0);
-    printf("pid: %d status: %d\n",pid,WEXITSTATUS(status));
+        waitpid(pid,&status,0);
+        printf("pid: %d status: %d\n",pid,WEXITSTATUS(status));
 
    
-        }
+    }
 
 
    }
