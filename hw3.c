@@ -67,8 +67,9 @@ int main(){
     }
     argsarray[i] = NULL;
     i+=1;
-    if(strcmp(argsarray[0],"a") == 0){
-            printf("inside a\n");
+
+    if(strcmp(argsarray[0],"exit") == 0){
+            
             exit(0);
     }
 
@@ -128,15 +129,15 @@ int main(){
         }
 
     else{
-        printf("IN CHILD with pid% d getpid %d\n",pid,getpid());
+       
          execv(argsarray[0], argsarray);
      }
     }
      else{
-        printf("In parent. my child pid %d\n", pid);
+        
         int status;
     waitpid(pid,&status,0);
-    printf("PARENT pid:%d getpid():%d\n",pid,getpid());
+    printf("pid: %d status: %d\n",pid,WEXITSTATUS(status));
 
    
         }
