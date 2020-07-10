@@ -75,7 +75,7 @@ int main(){
    if(  strchr(argsarray[i-2],'\n') !=NULL ){
 	 argsarray[i-2][strlen(argsarray[i-2])-1]  ='\0';
    }
-   printf("hello2");
+   
     bool special= false;
     char * arg1[3];
     char * arg2[3];
@@ -171,7 +171,7 @@ int main(){
         int status;
         waitpid(pid,&status,0);
 
-        printf("pid: %d status:%d\n",pid,WEXITSTATUS(status));
+        printf("pid:%d status:%d\n",pid,WEXITSTATUS(status));
 
    
     }
