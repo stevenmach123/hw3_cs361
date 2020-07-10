@@ -22,8 +22,8 @@ void handle2(){
 
 int main(){
 
-  // signal(SIGINT,handle1);
-  // signal(SIGTSTP,handle2);
+   signal(SIGINT,handle1);
+   signal(SIGTSTP,handle2);
   while(1){
   char line[100];
   char* argsarray[20];
@@ -50,8 +50,8 @@ int main(){
   printf("CS361 > ");
 //read line from terminal
   fgets(line, 500, stdin);
-  signal(SIGTSTP,handle2);
-  signal(SIGINT,handle1);
+ // signal(SIGTSTP,handle2);
+  //signal(SIGINT,handle1);
   //break the string up into words
   char *word = strtok(line, " ");
   int i =0;
