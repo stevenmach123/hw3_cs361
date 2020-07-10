@@ -71,22 +71,31 @@ int main(){
             
             exit(0);
     }
-   
+   printf("hello");
    if(  strchr(argsarray[i-2],'\n') !=NULL ){
 	 argsarray[i-2][strlen(argsarray[i-2])-1]  ='\0';
    }
-   
+   printf("hello2");
     bool special= false;
+    char * arg1[3];
+    char * arg2[3];
     if(i>5){
-    for(int j =0; j< i;j++){
+         printf("step1");
         if(strcmp(argsarray[2], ";") == 0 || strcmp(argsarray[2], "|")== 0   ){
-
+	        strcpy(arg1[0],argsarray[0]);
+		 strcpy(arg1[1],argsarray[1]);
+		arg1[2]=NULL;
+		printf("step2");
+		strcpy(arg2[0],argsarray[3]);
+                 strcpy(arg2[1],argsarray[4]);
+		 arg2[2] =NULL;
+		  printf("step3");
                 special =true;
 
         }
 
     }
-    }
+    
 
     int pid = fork();
 
@@ -94,11 +103,16 @@ int main(){
      if (pid == 0) {
         if(special ==true && strcmp(argsarray[2], ";") == 0 ){          
            int pid2 = fork();
+	   if(pid2 ==0){
+		 printf("IN CHILD2 pid %d,getpid() %d",pid,getpid());  
+		 execv(argsarray[0], arg2);
+		 
+	   }
            int status2;
            waitpid(pid2,&status2,0);
            printf("IN CHILD pid %d,getpid() %d",pid,getpid());
-           execv(argsarray[0], argsarray);
-           exit(0);
+           execv(argsarray[0], arg1);
+           
 
         }
         else if(special ==true && strcmp(argsarray[2], "|") == 0){
