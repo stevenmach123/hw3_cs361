@@ -50,8 +50,8 @@ int main(){
   printf("CS361 > ");
 //read line from terminal
   fgets(line, 500, stdin);
-  //signal(SIGTSTP,handle2);
-  //signal(SIGINT,handle1);
+  signal(SIGTSTP,handle2);
+  signal(SIGINT,handle1);
   //break the string up into words
   char *word = strtok(line, " ");
   int i =0;
@@ -71,7 +71,7 @@ int main(){
             
             exit(0);
     }
-   printf("hello");
+   
    if(  strchr(argsarray[i-2],'\n') !=NULL ){
 	 argsarray[i-2][strlen(argsarray[i-2])-1]  ='\0';
    }
@@ -79,17 +79,28 @@ int main(){
     bool special= false;
     char * arg1[3];
     char * arg2[3];
-    if(i>5){
-         printf("step1");
+ for (int i=0; i <3; i++){
+
+    arg1[i] =  malloc(100 * sizeof(char));
+
+  }
+  for (int i=0; i < 3; i++){
+
+     arg2[i] =  malloc(100 * sizeof(char));
+
+  }
+    if(i>4){
+       
         if(strcmp(argsarray[2], ";") == 0 || strcmp(argsarray[2], "|")== 0   ){
 	        strcpy(arg1[0],argsarray[0]);
+
 		 strcpy(arg1[1],argsarray[1]);
 		arg1[2]=NULL;
 		printf("step2");
 		strcpy(arg2[0],argsarray[3]);
                  strcpy(arg2[1],argsarray[4]);
 		 arg2[2] =NULL;
-		  printf("step3");
+		  printf("step3"); 
                 special =true;
 
         }
@@ -103,17 +114,19 @@ int main(){
      if (pid == 0) {
         if(special ==true && strcmp(argsarray[2], ";") == 0 ){          
            int pid2 = fork();
+	   printf("in |\n");
 	   if(pid2 ==0){
-		 printf("IN CHILD2 pid %d,getpid() %d",pid,getpid());  
-		 execv(argsarray[0], arg2);
-		 
+		 printf("IN CHILD2; pid %d,getpid() %d",pid2,getpid());  
+		 execv(arg2[0], arg1);
+		 //execv(argsarray[0], argsarray);
 	   }
+	   else{
            int status2;
            waitpid(pid2,&status2,0);
-           printf("IN CHILD pid %d,getpid() %d",pid,getpid());
-           execv(argsarray[0], arg1);
-           
-
+           printf("IN CHILD; pid %d,getpid() %d",pid,getpid());
+           execv(arg1[0], arg2);
+           //execv(argsarray[0], argsarray);
+	   }
         }
         else if(special ==true && strcmp(argsarray[2], "|") == 0){
           int pid2 = fork();
