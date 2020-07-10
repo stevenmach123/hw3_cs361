@@ -71,7 +71,11 @@ int main(){
             
             exit(0);
     }
-
+   
+   if(  strchr(argsarray[i-2],'\n') !=NULL ){
+	 argsarray[i-2][strlen(argsarray[i-2])-1]  ='\0';
+   }
+   printf("%s",argsarray[i-2]);
     bool special= false;
     if(i>5){
     for(int j =0; j< i;j++){
