@@ -58,7 +58,7 @@ int main(){
 
     while (word) {
 
-     printf("word: %s\n", word);
+   //  printf("word: %s\n", word);
     //copy a word to the arg array
      strcpy(argsarray[i], word);
     //get next wo       rd
@@ -134,7 +134,7 @@ int main(){
         }
 
     else{
-         printf("IN CHILD pid: %d getpid(): %d\n",pid,getpid()); 
+          
          execv(argsarray[0], argsarray);
 	 exit(0);
      }
@@ -144,7 +144,7 @@ int main(){
         int status;
         waitpid(pid,&status,0);
 
-        printf("IN PARENT pid: %d getpid() %d status: %d\n",pid,getpid(),WEXITSTATUS(status));
+        printf("pid: %d status:%d\n",pid,WEXITSTATUS(status));
 
    
     }
