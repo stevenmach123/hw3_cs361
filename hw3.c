@@ -160,7 +160,7 @@ int main(){
 		  //char *sentence = "CHILD| getpid() ";
 		  
 		 
-                  //dup2(pipefds[1],1);
+                  dup2(pipefds[1],1);
 		  
 		   //write(1,"meo",3);
 		  //char* c = "abdecdd";
