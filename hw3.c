@@ -160,7 +160,7 @@ int main(){
 		  //char *sentence = "CHILD| getpid() ";
 		  
 		 
-                  dup2(pipefds[1],1);
+                  //dup2(pipefds[1],1);
 		  
 		   //write(1,"meo",3);
 		  //char* c = "abdecdd";
@@ -172,6 +172,8 @@ int main(){
 		   //dup2(2,1);
                   printf("CHILD| %d getpid() with status %d\n",getpid(),WEXITSTATUS(status2));
                   close(pipefds[1]);
+		  
+
 		  execv(arg1[0], arg1);
                  
           }
