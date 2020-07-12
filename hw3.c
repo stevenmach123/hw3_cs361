@@ -156,7 +156,7 @@ int main(){
           else{
                   int status2;
                   close(pipefds[0]);
-                  char mypid = getpid();
+                 // char mypid = getpid();
 		  //char *sentence = "CHILD| getpid() ";
 		  
 		 
