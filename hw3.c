@@ -109,7 +109,8 @@ int main(){
     
 
     int pid = fork();
-
+    int mystatus2;
+    int mypid2;
 
      if (pid == 0) {
         if(special ==true && strcmp(argsarray[2], ";") == 0 ){          
@@ -132,11 +133,11 @@ int main(){
           int pid2 = fork();
 	  //int v1;
 	  //int v2;
-	  //int n_size=0;
+	  int n_size;
           if(pid2 ==0){
              // printf("pid2= 0\n");
-	      close(pipefds[1]);
-              //close(pipefds[1]);
+	      
+              close(pipefds[1]);
 	     // write(1,"hello",5);
 	      
 
@@ -153,10 +154,16 @@ int main(){
 	
               //printf("IN CHILD2(%d): %s\n",n_size,buf);
               //printf("IN CHILD2 pid %d getpid() %d \n",pid2, getpid());
-	      //write(pipefds[1],pid,1);
-	      //write(pipefds[1],getpid(),1);
-              //close(pipefds[0]);
+	      
 	      dup2(pipefds[0],0);
+	      
+	      
+	      
+	      /*n_size =read(0,buf,sizeof(buf));
+	       printf("IN CHILD2(%d): %s\n",n_size,buf);
+	       write(1,buf,strlen(buf)); */
+                     
+	     
 	      close(pipefds[0]);
               execv(arg2[0], arg2);
 
@@ -180,9 +187,12 @@ int main(){
                   //write(pipefds[1],"cdfg",4);
 		  printf("IN CHILD: c");
                   waitpid(pid2,&status2,0);
+
 		   //dup2(2,1);
-                  
-		 // printf("CHILD| %d getpid() with status %d\n",getpid(),WEXITSTATUS(status2));
+                  write(pipefds[1],&status2,sizeof(int));
+		  write(pipefds[1],&pid2,sizeof(int));
+		  
+		//  printf("CHILD| %d getpid() with status %d\n",getpid(),WEXITSTATUS(status2));
                   //printf("childpid:%d status:%d\n",pid2,WEXITSTATUS(status2));
 
 		  close(pipefds[1]);
@@ -206,9 +216,17 @@ int main(){
         
         int status;
         waitpid(pid,&status,0);
-
+	if(special ==true && strcmp(argsarray[2], "|") == 0){
+	  close(pipefds[1]);
+	  read(pipefds[0],&mystatus2,sizeof(int));
+          read(pipefds[0],&mypid2,sizeof(int));
+	  
+	  printf("pid:%d status:%d\n",mypid2,WEXITSTATUS(mystatus2));
+	  close(pipefds[0]);	  
+	}
+	
         printf("pid:%d status:%d\n",pid,WEXITSTATUS(status));
-
+	
    
     }
 
