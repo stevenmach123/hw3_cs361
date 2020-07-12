@@ -156,6 +156,7 @@ int main(){
 	      //write(pipefds[1],pid,1);
 	      //write(pipefds[1],getpid(),1);
               //close(pipefds[0]);
+	      dup2(pipefds[0],0);
 	      close(pipefds[0]);
               execv(arg2[0], arg2);
 
