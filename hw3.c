@@ -45,7 +45,7 @@ int main(){
      argsarray[i] =  malloc(100 * sizeof(char));
 
   }
-  printf("me is %d ",getpid());
+  //printf("me is %d ",getpid());
   //print prompti
   printf("CS361 > ");
 //read line from terminal
@@ -96,11 +96,11 @@ int main(){
 
 		 strcpy(arg1[1],argsarray[1]);
 		arg1[2]=NULL;
-		printf("step2");
+		//printf("step2");
 		strcpy(arg2[0],argsarray[3]);
                  strcpy(arg2[1],argsarray[4]);
 		 arg2[2] =NULL;
-		  printf("step3"); 
+		 // printf("step3"); 
                 special =true;
 
         }
@@ -114,7 +114,7 @@ int main(){
      if (pid == 0) {
         if(special ==true && strcmp(argsarray[2], ";") == 0 ){          
            int pid2 = fork();
-	   printf("in |\n");
+	   
 	   if(pid2 ==0){
 		 printf("IN CHILD2; pid %d,getpid() %d",pid2,getpid());  
 		 execv(arg2[0], arg2);
@@ -130,12 +130,17 @@ int main(){
         }
         else if(special ==true && strcmp(argsarray[2], "|") == 0){
           int pid2 = fork();
-	  int n_size=0;
+	  //int v1;
+	  //int v2;
+	  //int n_size=0;
           if(pid2 ==0){
-              printf("pid2= 0\n");
-              close(pipefds[1]);
+             // printf("pid2= 0\n");
+	      close(pipefds[1]);
+              //close(pipefds[1]);
 	     // write(1,"hello",5);
 	      
+
+
               //n_size =read(pipefds[0],buf,sizeof(buf)/sizeof(char));
 	       
 	      //n_size=  read(pipefds[0],buf,2);
@@ -143,11 +148,15 @@ int main(){
   		n_size +=sizeof(buf)/sizeof(char) ;
 		printf("with %d \n",n_size);
 	      } */
-	       printf("IN CHILD2(%d): %s\n",n_size,buf);
 
+	       //printf("IN CHILD2(%d): %s\n",n_size,buf);
+	
               //printf("IN CHILD2(%d): %s\n",n_size,buf);
-              printf("IN CHILD2 pid %d getpid() %d \n",pid2, getpid());
-              close(pipefds[0]);
+              //printf("IN CHILD2 pid %d getpid() %d \n",pid2, getpid());
+	      //write(pipefds[1],pid,1);
+	      //write(pipefds[1],getpid(),1);
+              //close(pipefds[0]);
+	      close(pipefds[0]);
               execv(arg2[0], arg2);
 
 
@@ -156,6 +165,7 @@ int main(){
           else{
                   int status2;
                   close(pipefds[0]);
+		 // close(pipefds[1]);
                  // char mypid = getpid();
 		  //char *sentence = "CHILD| getpid() ";
 		  
@@ -167,12 +177,15 @@ int main(){
 		  //write(pipefds[1],c,strlen(c));
 		   
                   //write(pipefds[1],"cdfg",4);
-		  //printf("IN CHILD: c");
+		  printf("IN CHILD: c");
                   waitpid(pid2,&status2,0);
 		   //dup2(2,1);
-                  printf("CHILD| %d getpid() with status %d\n",getpid(),WEXITSTATUS(status2));
-                  close(pipefds[1]);
-		  
+                  
+		 // printf("CHILD| %d getpid() with status %d\n",getpid(),WEXITSTATUS(status2));
+                  //printf("childpid:%d status:%d\n",pid2,WEXITSTATUS(status2));
+
+		  close(pipefds[1]);
+		  //close(pipefds[0]);
 
 		  execv(arg1[0], arg1);
                  
