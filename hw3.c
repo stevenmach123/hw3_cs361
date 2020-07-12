@@ -89,7 +89,7 @@ int main(){
      arg2[i] =  malloc(100 * sizeof(char));
 
   }
-    if(i>4){
+    if(i>3){
        
         if(strcmp(argsarray[2], ";") == 0 || strcmp(argsarray[2], "|")== 0   ){
 	        strcpy(arg1[0],argsarray[0]);
