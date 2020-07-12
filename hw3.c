@@ -133,7 +133,7 @@ int main(){
           int pid2 = fork();
 	  //int v1;
 	  //int v2;
-	  int n_size;
+	 // int n_size;
           if(pid2 ==0){
              // printf("pid2= 0\n");
 	      
