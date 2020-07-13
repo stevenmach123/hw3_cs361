@@ -160,7 +160,7 @@ int pid = fork();
          
          
           if(pid ==0){
-            int status;
+       //     int status;
 
              close(pipefds[0]);
              
@@ -209,7 +209,7 @@ int pid = fork();
 	  if(pid2==0){
 		  
 		  dup2(pipefds[0],STDIN_FILENO);
-		 int  n_size = read(pipefds[0],buf,sizeof(buf));
+	//	 int  n_size = read(pipefds[0],buf,sizeof(buf));
 		  //write(1,buf,sizeof(buf));			  
 		 // printf("IN CHILD2(%d): %s\n",n_size,buf);
 		  execv(arg2[0], arg2);
