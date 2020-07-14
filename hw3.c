@@ -207,18 +207,20 @@ int pid = fork();
 	  mypid2 = pid;
 	  int pid2= fork();
 	  if(pid2==0){
-		  
+		   
 		  dup2(pipefds[0],STDIN_FILENO);
+		  close(pipefds[1]);
 	//fdf	 int  n_size = read(pipefds[0],buf,sizeof(buf));
 		  //write(1,buf,sizeof(buf));			  
 		 // printf("IN CHILD2(%d): %s\n",n_size,buf);
 		  execv(arg2[0], arg2);
 	  }
 	  else{
-	  
+	  close(pipefds[0]);
+	  close(pipefds[1]);
 	  waitpid(pid2,&status,0);
-	  printf("pid:%d status:%d\n",pid2,WEXITSTATUS(status));
-          printf("pid:%d status:%d\n",mypid2,WEXITSTATUS(mystatus2));
+	  printf("child2pid:%d status:%d\n",pid2,WEXITSTATUS(status));
+          printf("child1pid:%d status:%d\n",mypid2,WEXITSTATUS(mystatus2));
 	  
           
 	  }
@@ -235,5 +237,6 @@ int pid = fork();
 
 
 }
+
 
 
